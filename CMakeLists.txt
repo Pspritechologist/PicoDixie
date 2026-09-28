@@ -14,16 +14,28 @@ file(GLOB FORTRAN_SOURCES CONFIGURE_DEPENDS
 )
 
 add_executable(pengco_fort
+	bindings.c
     ${FORTRAN_SOURCES}
 )
 
 target_link_libraries(pengco_fort
-    pico_stdlib
+	pico_stdlib
 )
 
 target_compile_options(pengco_fort PRIVATE
-    -fimplicit-none
-    -fmodule-private
+    $<$<COMPILE_LANGUAGE:Fortran>:
+        -fimplicit-none
+		-fmodule-private
+		-Werror=implicit-interface
+		-Werror=implicit-procedure
+		-Werror=undefined-do-loop
+		-Werror=aliasing
+		-Werror=ampersand
+		-Werror=conversion
+		-Werror=surprising
+		-Werror=c-binding-type
+		-Werror=intrinsics-std
+    >
 )
 
 pico_enable_stdio_usb(pengco_fort 1)
