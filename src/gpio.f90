@@ -22,6 +22,12 @@ module gpio
 			import c_int, c_bool
 			integer(c_int), value, intent(in) :: gpio
 		end function
+
+		subroutine fgpio_set_dir(gpio, out) bind(C)
+			import c_int, c_bool
+			integer(c_int), value, intent(in) :: gpio
+			logical(c_bool), value, intent(in) :: out
+		end subroutine
 	end interface
 
 	public
@@ -32,13 +38,13 @@ contains
 	!> Clear the output enable (i.e. set to input).\
 	!> Clear any output value.
 	subroutine gpio_init(gpio)
-		integer(c_int), intent(in), value :: gpio !> GPIO number.
+		integer, intent(in), value :: gpio !> GPIO number.
 		call fgpio_init(int(gpio, c_int))
 	end subroutine
 
 	!> Resets a GPIO back to the NULL function, i.e. disables it.
 	subroutine gpio_deinit(gpio)
-		integer(c_int), intent(in), value :: gpio !> GPIO number.
+		integer, intent(in), value :: gpio !> GPIO number.
 		call fgpio_deinit(int(gpio, c_int))
 	end subroutine
 
@@ -54,6 +60,13 @@ contains
 		logical state !> Current state of the GPIO.
 		integer, intent(in) :: gpio !> GPIO number.
 		state = fgpio_get(int(gpio, c_int))
-	end function gpio_get
+	end function
+
+	!> Set a single GPIO direction.
+	subroutine gpio_set_dir(gpio, out)
+		integer, intent(in) :: gpio !> GPIO number.
+		logical, intent(in) :: out !> True for out, false for in.
+		call fgpio_set_dir(int(gpio, c_int), logical(out, c_bool))
+	end subroutine
 
 end module gpio

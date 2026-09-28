@@ -1,6 +1,6 @@
 module io
 	use, intrinsic :: iso_c_binding
-	public print, stdio_init_all
+	public print, stdio_init_all, sleep_ms
 
 	interface
 		subroutine stdio_init_all() bind(c)

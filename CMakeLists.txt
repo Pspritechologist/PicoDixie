@@ -35,6 +35,9 @@ target_compile_options(pengco_fort PRIVATE
 		-Werror=surprising
 		-Werror=c-binding-type
 		-Werror=intrinsics-std
+
+		-nostartfiles
+		-specs=nosys.specs
     >
 )
 
