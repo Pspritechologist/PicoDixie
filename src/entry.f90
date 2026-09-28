@@ -1,15 +1,18 @@
 program pico
-	use io, only: stdio_init_all, print, sleep_ms
+	use io, only: stdio_init_all, sleep_ms
 	use gpio, only: gpio_init, gpio_put, gpio_set_dir
 
 	integer :: led_pin = 25
+	
+	logical state
 
 	call init
 	
+	state = .false.
 	do
-		call gpio_put(led_pin, .true.)
-		call sleep_ms(1000)
-		call gpio_put(led_pin, .false.)
+		state = .not. state
+		call gpio_put(led_pin, state)
+		print '("Pin",1x,i2.0,1x,"is",1x,l)', led_pin, state
 		call sleep_ms(1000)
 	end do
 
