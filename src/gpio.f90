@@ -14,23 +14,23 @@ module gpio
 
 		subroutine fgpio_put(gpio, state) bind(C)
 			import c_int, c_bool
-			integer(c_int), value, intent(in) :: gpio
-			logical(c_bool), value, intent(in) :: state
+			integer(c_int), intent(in), value :: gpio
+			logical(c_bool), intent(in), value :: state
 		end subroutine
 
 		logical(c_bool) function fgpio_get(gpio) bind(C)
 			import c_int, c_bool
-			integer(c_int), value, intent(in) :: gpio
+			integer(c_int), intent(in), value :: gpio
 		end function
 
 		subroutine fgpio_set_dir(gpio, out) bind(C)
 			import c_int, c_bool
-			integer(c_int), value, intent(in) :: gpio
-			logical(c_bool), value, intent(in) :: out
+			integer(c_int), intent(in), value :: gpio
+			logical(c_bool), intent(in), value :: out
 		end subroutine
 	end interface
 
-	public
+	public gpio_init, gpio_deinit, gpio_put, gpio_get, gpio_set_dir
 contains
 
 	!> Initialise a GPIO for (enabled I/O and set func to GPIO_FUNC_SIO)

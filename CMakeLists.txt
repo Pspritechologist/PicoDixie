@@ -12,9 +12,12 @@ pico_sdk_init()
 file(GLOB FORTRAN_SOURCES CONFIGURE_DEPENDS
     src/*
 )
+file(GLOB C_BINDS_SOURCES CONFIGURE_DEPENDS
+    c_bindings/*.c
+)
 
 add_executable(pengco_fort
-	bindings.c
+	${C_BINDS_SOURCES}
     ${FORTRAN_SOURCES}
 )
 
