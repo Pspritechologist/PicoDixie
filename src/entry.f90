@@ -7,7 +7,7 @@ program pico
 	logical state
 
 	call init
-	
+
 	state = .false.
 	do
 		state = .not. state
