@@ -10,10 +10,12 @@ project(my_project C CXX Fortran)
 pico_sdk_init()
 
 file(GLOB FORTRAN_SOURCES CONFIGURE_DEPENDS
-    src/*
+	src/*.f90
+    src/**/*.f90
 )
 file(GLOB C_BINDS_SOURCES CONFIGURE_DEPENDS
     c_bindings/*.c
+    c_bindings/**/*.c
 )
 
 add_executable(pengco_fort
