@@ -1,9 +1,9 @@
 #include "pico/stdlib.h"
 #include "hardware/pio.h"
 
-void fpio_get_pio0(PIO *pio) { *pio = pio0; }
-void fpio_get_pio1(PIO *pio) { *pio = pio1; }
-void fpio_get_pio2(PIO *pio) { *pio = pio2; }
+PIO fpio_get_pio0() { return pio0; }
+PIO fpio_get_pio1() { return pio1; }
+PIO fpio_get_pio2() { return pio2; }
 uint fpio_encode_delay(uint cycles) {
 	return pio_encode_delay(cycles);
 }
