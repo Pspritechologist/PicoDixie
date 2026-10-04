@@ -23,6 +23,7 @@ add_executable(pengco_fort
 
 target_link_libraries(pengco_fort
 	pico_stdlib
+	hardware_pio
 )
 
 target_compile_options(pengco_fort PRIVATE
