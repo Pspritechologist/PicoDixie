@@ -214,9 +214,9 @@ contains
 	!> combining the results of this function with the results of `pio_encode_sideset` and `pio_encode_sideset_opt`
 	!> as they share the same bits within the instruction encoding.
 	!> @param cycles the number of cycles 0-31 (or less if side set is being used)
+	!>
 	!> @return the delay slot bits to be ORed with an instruction encoding
-	function pio_encode_delay(cycles) result(r)
-		integer(c_int32_t) :: r
+	integer(c_int32_t) function pio_encode_delay(cycles) result(r)
 		integer, intent(in), value :: cycles
 		r = fpio_encode_delay(int(cycles, c_int32_t))
 	end function
@@ -228,9 +228,9 @@ contains
 	!> within the instruction encoding.
 	!> @param sideset_bit_count number of side set bits as would be specified via `.sideset` in pioasm
 	!> @param value the value to sideset on the pins
+	!>
 	!> @return the side set bits to be ORed with an instruction encoding
-	function pio_encode_sideset(sideset_bit_count, value) result(r)
-		integer(c_int32_t) :: r
+	integer(c_int32_t) function pio_encode_sideset(sideset_bit_count, value) result(r)
 		integer, intent(in), value :: sideset_bit_count
 		integer, intent(in), value :: value
 		r = fpio_encode_sideset(int(sideset_bit_count, c_int32_t), int(value, c_int32_t))
@@ -243,98 +243,106 @@ contains
 	!> within the instruction encoding.
 	!> @param sideset_bit_count number of side set bits as would be specified via `.sideset <n> opt` in pioasm
 	!> @param value the value to sideset on the pins
+	!>
 	!> @return the side set bits to be ORed with an instruction encoding
-	function pio_encode_sideset_opt(sideset_bit_count, value) result(r)
-		integer(c_int32_t) :: r
+	integer(c_int32_t) function pio_encode_sideset_opt(sideset_bit_count, value) result(r)
 		integer, intent(in), value :: sideset_bit_count
 		integer, intent(in), value :: value
 		r = fpio_encode_sideset_opt(int(sideset_bit_count, c_int32_t), int(value, c_int32_t))
 	end function
 
 	!> Encode an unconditional JMP instruction
-	!> This is the equivalent of `JMP <addr>`
+	!>
+	!> This is the equivalent of `JMP <addr>`\
+	!> See `pio_encode_delay`, `pio_encode_sideset`, `pio_encode_sideset_opt`
 	!> @param addr The target address 0-31 (an absolute address within the PIO instruction memory)
+	!>
 	!> @return The instruction encoding with 0 delay and no side set value
-	!> See pio_encode_delay, pio_encode_sideset, pio_encode_sideset_opt
-	function pio_encode_jmp(addr) result(r)
-		integer(c_int32_t) :: r
+	integer(c_int32_t) function pio_encode_jmp(addr) result(r)
 		integer, intent(in), value :: addr
 		r = fpio_encode_jmp(int(addr, c_int32_t))
 	end function
 
 	!> Encode a conditional JMP if scratch X zero instruction
-	!> This is the equivalent of `JMP !X <addr>`
+	!>
+	!> This is the equivalent of `JMP !X <addr>`\
+	!> See `pio_encode_delay`, `pio_encode_sideset`, `pio_encode_sideset_opt`
 	!> @param addr The target address 0-31 (an absolute address within the PIO instruction memory)
+	!>
 	!> @return The instruction encoding with 0 delay and no side set value
-	!> See pio_encode_delay, pio_encode_sideset, pio_encode_sideset_opt
-	function pio_encode_jmp_not_x(addr) result(r)
-		integer(c_int32_t) :: r
+	integer(c_int32_t) function pio_encode_jmp_not_x(addr) result(r)
 		integer, intent(in), value :: addr
 		r = fpio_encode_jmp_not_x(int(addr, c_int32_t))
 	end function
 
 	!> Encode a conditional JMP if scratch X non-zero (and post-decrement X) instruction
-	!> This is the equivalent of `JMP X-- <addr>`
+	!>
+	!> This is the equivalent of `JMP X-- <addr>`\
+	!> See `pio_encode_delay`, `pio_encode_sideset`, `pio_encode_sideset_opt`
 	!> @param addr The target address 0-31 (an absolute address within the PIO instruction memory)
+	!>
 	!> @return The instruction encoding with 0 delay and no side set value
-	!> See pio_encode_delay, pio_encode_sideset, pio_encode_sideset_opt
-	function pio_encode_jmp_x_dec(addr) result(r)
-		integer(c_int32_t) :: r
+	integer(c_int32_t) function pio_encode_jmp_x_dec(addr) result(r)
 		integer, intent(in), value :: addr
 		r = fpio_encode_jmp_x_dec(int(addr, c_int32_t))
 	end function
 
 	!> Encode a conditional JMP if scratch Y zero instruction
-	!> This is the equivalent of `JMP !Y <addr>`
+	!>
+	!> This is the equivalent of `JMP !Y <addr>`\
+	!> See `pio_encode_delay`, `pio_encode_sideset`, `pio_encode_sideset_opt`
 	!> @param addr The target address 0-31 (an absolute address within the PIO instruction memory)
+	!>
 	!> @return The instruction encoding with 0 delay and no side set value
-	!> See pio_encode_delay, pio_encode_sideset, pio_encode_sideset_opt
-	function pio_encode_jmp_not_y(addr) result(r)
-		integer(c_int32_t) :: r
+	integer(c_int32_t) function pio_encode_jmp_not_y(addr) result(r)
 		integer, intent(in), value :: addr
 		r = fpio_encode_jmp_not_y(int(addr, c_int32_t))
 	end function
 
 	!> Encode a conditional JMP if scratch Y non-zero (and post-decrement Y) instruction
-	!> This is the equivalent of `JMP Y-- <addr>`
+	!>
+	!> This is the equivalent of `JMP Y-- <addr>`\
+	!> See `pio_encode_delay`, `pio_encode_sideset`, `pio_encode_sideset_opt`
 	!> @param addr The target address 0-31 (an absolute address within the PIO instruction memory)
+	!>
 	!> @return The instruction encoding with 0 delay and no side set value
-	!> See pio_encode_delay, pio_encode_sideset, pio_encode_sideset_opt
-	function pio_encode_jmp_y_dec(addr) result(r)
-		integer(c_int32_t) :: r
+	integer(c_int32_t) function pio_encode_jmp_y_dec(addr) result(r)
 		integer, intent(in), value :: addr
 		r = fpio_encode_jmp_y_dec(int(addr, c_int32_t))
 	end function
 
 	!> Encode a conditional JMP if scratch X not equal scratch Y instruction
-	!> This is the equivalent of `JMP X!=Y <addr>`
+	!>
+	!> This is the equivalent of `JMP X!=Y <addr>`\
+	!> See `pio_encode_delay`, `pio_encode_sideset`, `pio_encode_sideset_opt`
 	!> @param addr The target address 0-31 (an absolute address within the PIO instruction memory)
+	!>
 	!> @return The instruction encoding with 0 delay and no side set value
-	!> See pio_encode_delay, pio_encode_sideset, pio_encode_sideset_opt
-	function pio_encode_jmp_x_ne_y(addr) result(r)
-		integer(c_int32_t) :: r
+	integer(c_int32_t) function pio_encode_jmp_x_ne_y(addr) result(r)
 		integer, intent(in), value :: addr
 		r = fpio_encode_jmp_x_ne_y(int(addr, c_int32_t))
 	end function
 
 	!> Encode a conditional JMP if input pin high instruction
-	!> This is the equivalent of `JMP PIN <addr>`
+	!>
+	!> This is the equivalent of `JMP PIN <addr>`\
+	!> See `pio_encode_delay`, `pio_encode_sideset`, `pio_encode_sideset_opt`
 	!> @param addr The target address 0-31 (an absolute address within the PIO instruction memory)
+	!>
 	!> @return The instruction encoding with 0 delay and no side set value
-	!> See pio_encode_delay, pio_encode_sideset, pio_encode_sideset_opt
-	function pio_encode_jmp_pin(addr) result(r)
-		integer(c_int32_t) :: r
+	integer(c_int32_t) function pio_encode_jmp_pin(addr) result(r)
 		integer, intent(in), value :: addr
 		r = fpio_encode_jmp_pin(int(addr, c_int32_t))
 	end function
 
 	!> Encode a conditional JMP if output shift register not empty instruction
-	!> This is the equivalent of `JMP !OSRE <addr>`
+	!>
+	!> This is the equivalent of `JMP !OSRE <addr>`\
+	!> See `pio_encode_delay`, `pio_encode_sideset`, `pio_encode_sideset_opt`
 	!> @param addr The target address 0-31 (an absolute address within the PIO instruction memory)
+	!>
 	!> @return The instruction encoding with 0 delay and no side set value
-	!> See pio_encode_delay, pio_encode_sideset, pio_encode_sideset_opt
-	function pio_encode_jmp_not_osre(addr) result(r)
-		integer(c_int32_t) :: r
+	integer(c_int32_t) function pio_encode_jmp_not_osre(addr) result(r)
 		integer, intent(in), value :: addr
 		r = fpio_encode_jmp_not_osre(int(addr, c_int32_t))
 	end function
@@ -344,12 +352,13 @@ contains
 	!> Note: gpio here refers to the raw instruction encoding, which only supports 32 GPIOs. So, if you had a PIO
 	!> program with `WAIT <polarity> GPIO 42` and a GPIO_BASE (see `pio_set_gpio_base`) of 16, then you'd want to do
 	!> `pio_encode_wait_gpio(polarity, 42-16)` assuming you are using this function to craft instructions for `pio_sm_exec`.
-	!> @param polarity true for `WAIT 1`, false for `WAIT 0`
+	!>
+	!> See `pio_encode_delay`, `pio_encode_sideset`, `pio_encode_sideset_opt`
+	!> @param polarity true for `WAIT 1`, false for `WAIT 0`\
 	!> @param gpio The GPIO number 0-31 relative to the state machine's GPIO_BASE (see `pio_set_gpio_base`)
+	!>
 	!> @return The instruction encoding with 0 delay and no side set value
-	!> See pio_encode_delay, pio_encode_sideset, pio_encode_sideset_opt
-	function pio_encode_wait_gpio(polarity, gpio) result(r)
-		integer(c_int32_t) :: r
+	integer(c_int32_t) function pio_encode_wait_gpio(polarity, gpio) result(r)
 		logical, intent(in), value :: polarity
 		integer, intent(in), value :: gpio
 		r = fpio_encode_wait_gpio(logical(polarity, c_bool), int(gpio, c_int32_t))
@@ -357,12 +366,13 @@ contains
 
 	!> Encode a WAIT for pin instruction
 	!> This is the equivalent of `WAIT <polarity> PIN <pin>`
-	!> @param polarity true for `WAIT 1`, false for `WAIT 0`
+	!>
+	!> See `pio_encode_delay`, `pio_encode_sideset`, `pio_encode_sideset_opt`
+	!> @param polarity true for `WAIT 1`, false for `WAIT 0`\
 	!> @param pin The pin number 0-31 relative to the executing SM's input pin mapping
+	!>
 	!> @return The instruction encoding with 0 delay and no side set value
-	!> See pio_encode_delay, pio_encode_sideset, pio_encode_sideset_opt
-	function pio_encode_wait_pin(polarity, pin) result(r)
-		integer(c_int32_t) :: r
+	integer(c_int32_t) function pio_encode_wait_pin(polarity, pin) result(r)
 		logical, intent(in), value :: polarity
 		integer, intent(in), value :: pin
 		r = fpio_encode_wait_pin(logical(polarity, c_bool), int(pin, c_int32_t))
@@ -371,12 +381,13 @@ contains
 	!> Encode a WAIT for IRQ instruction
 	!> This is the equivalent of `WAIT <polarity> IRQ <irq> <relative>`
 	!> @param polarity true for `WAIT 1`, false for `WAIT 0`
-	!> @param relative true for a `WAIT IRQ <irq> REL`, false for regular `WAIT IRQ <irq>`
+	!>
+	!> See `pio_encode_delay`, `pio_encode_sideset`, `pio_encode_sideset_opt`
+	!> @param relative true for a `WAIT IRQ <irq> REL`, false for regular `WAIT IRQ <irq>`\
 	!> @param irq the irq number 0-7
+	!>
 	!> @return The instruction encoding with 0 delay and no side set value
-	!> See pio_encode_delay, pio_encode_sideset, pio_encode_sideset_opt
-	function pio_encode_wait_irq(polarity, relative, irq) result(r)
-		integer(c_int32_t) :: r
+	integer(c_int32_t) function pio_encode_wait_irq(polarity, relative, irq) result(r)
 		logical, intent(in), value :: polarity
 		logical, intent(in), value :: relative
 		integer, intent(in), value :: irq
@@ -385,12 +396,13 @@ contains
 
 	!> Encode a WAIT for jmppin instruction
 	!> This is the equivalent of `WAIT <polarity> JMPPIN + <offset>`
-	!> @param polarity true for `WAIT 1`, false for `WAIT 0`
+	!>
+	!> See `pio_encode_delay`, `pio_encode_sideset`, `pio_encode_sideset_opt`
+	!> @param polarity true for `WAIT 1`, false for `WAIT 0`\
 	!> @param offset The pin offset 0-3 relative to the executing SM's jmp pin mapping
+	!>
 	!> @return The instruction encoding with 0 delay and no side set value
-	!> See pio_encode_delay, pio_encode_sideset, pio_encode_sideset_opt
-	function pio_encode_wait_jmppin(polarity, offset) result(r)
-		integer(c_int32_t) :: r
+	integer(c_int32_t) function pio_encode_wait_jmppin(polarity, offset) result(r)
 		logical, intent(in), value :: polarity
 		integer, intent(in), value :: offset
 		r = fpio_encode_wait_jmppin(logical(polarity, c_bool), int(offset, c_int32_t))
@@ -398,12 +410,13 @@ contains
 
 	!> Encode an IN instruction
 	!> This is the equivalent of `IN <src>, <count>`
-	!> @param src The source to take data from
+	!>
+	!> See `pio_encode_delay`, `pio_encode_sideset`, `pio_encode_sideset_opt`
+	!> @param src The source to take data from\
 	!> @param count The number of bits 1-32
+	!>
 	!> @return The instruction encoding with 0 delay and no side set value
-	!> See pio_encode_delay, pio_encode_sideset, pio_encode_sideset_opt
-	function pio_encode_in(src, count) result(r)
-		integer(c_int32_t) :: r
+	integer(c_int32_t) function pio_encode_in(src, count) result(r)
 		integer, intent(in), value :: src
 		integer, intent(in), value :: count
 		r = fpio_encode_in(int(src, c_int32_t), int(count, c_int32_t))
@@ -411,12 +424,13 @@ contains
 
 	!> Encode an OUT instruction
 	!> This is the equivalent of `OUT <src>, <count>`
-	!> @param dest The destination to write data to
+	!>
+	!> See `pio_encode_delay`, `pio_encode_sideset`, `pio_encode_sideset_opt`
+	!> @param dest The destination to write data to\
 	!> @param count The number of bits 1-32
+	!>
 	!> @return The instruction encoding with 0 delay and no side set value
-	!> See pio_encode_delay, pio_encode_sideset, pio_encode_sideset_opt
-	function pio_encode_out(dest, count) result(r)
-		integer(c_int32_t) :: r
+	integer(c_int32_t) function pio_encode_out(dest, count) result(r)
 		integer, intent(in), value :: dest
 		integer, intent(in), value :: count
 		r = fpio_encode_out(int(dest, c_int32_t), int(count, c_int32_t))
@@ -424,12 +438,13 @@ contains
 
 	!> Encode a PUSH instruction
 	!> This is the equivalent of `PUSH <if_full>, <block>`
-	!> @param if_full true for `PUSH IF_FULL ...`, false for `PUSH ...`
+	!>
+	!> See `pio_encode_delay`, `pio_encode_sideset`, `pio_encode_sideset_opt`
+	!> @param if_full true for `PUSH IF_FULL ...`, false for `PUSH ...`\
 	!> @param block true for `PUSH ... BLOCK`, false for `PUSH ...`
+	!>
 	!> @return The instruction encoding with 0 delay and no side set value
-	!> See pio_encode_delay, pio_encode_sideset, pio_encode_sideset_opt
-	function pio_encode_push(if_full, block) result(r)
-		integer(c_int32_t) :: r
+	integer(c_int32_t) function pio_encode_push(if_full, block) result(r)
 		logical, intent(in), value :: if_full
 		logical, intent(in), value :: block
 		r = fpio_encode_push(logical(if_full, c_bool), logical(block, c_bool))
@@ -437,36 +452,43 @@ contains
 
 	!> Encode a PULL instruction
 	!> This is the equivalent of `PULL <if_empty>, <block>`
-	!> @param if_empty true for `PULL IF_EMPTY ...`, false for `PULL ...`
+	!>
+	!> See `pio_encode_delay`, `pio_encode_sideset`, `pio_encode_sideset_opt`
+	!> @param if_empty true for `PULL IF_EMPTY ...`, false for `PULL ...`\
 	!> @param block true for `PULL ... BLOCK`, false for `PULL ...`
+	!>
 	!> @return The instruction encoding with 0 delay and no side set value
-	!> See pio_encode_delay, pio_encode_sideset, pio_encode_sideset_opt
-	function pio_encode_pull(if_empty, block) result(r)
-		integer(c_int32_t) :: r
+	integer(c_int32_t) function pio_encode_pull(if_empty, block) result(r)
 		logical, intent(in), value :: if_empty
 		logical, intent(in), value :: block
 		r = fpio_encode_pull(logical(if_empty, c_bool), logical(block, c_bool))
 	end function
 
-	!> Encode a NOP instruction
-	!> This is the equivalent of `NOP` which is itself encoded as `MOV y, y`
+	!> @brief Encode a MOV instruction.
+	!>
+	!> This is the equivalent of `MOV <dest>, <src>`.
+	!>
+	!> See `pio_encode_delay`, `pio_encode_sideset`, `pio_encode_sideset_opt`
+	!> @param dest The destination to write data to.\
+	!> @param src The source to take data from.
+	!>
 	!> @return The instruction encoding with 0 delay and no side set value
-	!> See pio_encode_delay, pio_encode_sideset, pio_encode_sideset_opt
-	function pio_encode_mov(dest, src) result(r)
-		integer(c_int32_t) :: r
+	integer(c_int32_t) function pio_encode_mov(dest, src) result(r)
 		integer, intent(in), value :: dest
 		integer, intent(in), value :: src
 		r = fpio_encode_mov(int(dest, c_int32_t), int(src, c_int32_t))
 	end function
 
 	!> Encode a MOV instruction with bit invert
+	!>
 	!> This is the equivalent of `MOV <dest>, ~<src>`
-	!> @param dest The destination to write inverted data to
+	!>
+	!> See `pio_encode_delay`, `pio_encode_sideset`, `pio_encode_sideset_opt`
+	!> @param dest The destination to write inverted data to\
 	!> @param src The source to take data from
+	!>
 	!> @return The instruction encoding with 0 delay and no side set value
-	!> See pio_encode_delay, pio_encode_sideset, pio_encode_sideset_opt
-	function pio_encode_mov_not(dest, src) result(r)
-		integer(c_int32_t) :: r
+	integer(c_int32_t) function pio_encode_mov_not(dest, src) result(r)
 		integer, intent(in), value :: dest
 		integer, intent(in), value :: src
 		r = fpio_encode_mov_not(int(dest, c_int32_t), int(src, c_int32_t))
@@ -474,12 +496,13 @@ contains
 
 	!> Encode a MOV instruction with bit reverse
 	!> This is the equivalent of `MOV <dest>, ::<src>`
-	!> @param dest The destination to write bit reversed data to
+	!>
+	!> See `pio_encode_delay`, `pio_encode_sideset`, `pio_encode_sideset_opt`
+	!> @param dest The destination to write bit reversed data to\
 	!> @param src The source to take data from
+	!>
 	!> @return The instruction encoding with 0 delay and no side set value
-	!> See pio_encode_delay, pio_encode_sideset, pio_encode_sideset_opt
-	function pio_encode_mov_reverse(dest, src) result(r)
-		integer(c_int32_t) :: r
+	integer(c_int32_t) function pio_encode_mov_reverse(dest, src) result(r)
 		integer, intent(in), value :: dest
 		integer, intent(in), value :: src
 		r = fpio_encode_mov_reverse(int(dest, c_int32_t), int(src, c_int32_t))
@@ -487,12 +510,13 @@ contains
 
 	!> Encode a IRQ SET instruction
 	!> This is the equivalent of `IRQ SET <irq> <relative>`
-	!> @param relative true for a `IRQ SET <irq> REL`, false for regular `IRQ SET <irq>`
+	!>
+	!> See `pio_encode_delay`, `pio_encode_sideset`, `pio_encode_sideset_opt`
+	!> @param relative true for a `IRQ SET <irq> REL`, false for regular `IRQ SET <irq>`\
 	!> @param irq the irq number 0-7
+	!>
 	!> @return The instruction encoding with 0 delay and no side set value
-	!> See pio_encode_delay, pio_encode_sideset, pio_encode_sideset_opt
-	function pio_encode_irq_set(relative, irq) result(r)
-		integer(c_int32_t) :: r
+	integer(c_int32_t) function pio_encode_irq_set(relative, irq) result(r)
 		logical, intent(in), value :: relative
 		integer, intent(in), value :: irq
 		r = fpio_encode_irq_set(logical(relative, c_bool), int(irq, c_int32_t))
@@ -500,12 +524,13 @@ contains
 
 	!> Encode a IRQ WAIT instruction
 	!> This is the equivalent of `IRQ WAIT <irq> <relative>`
-	!> @param relative true for a `IRQ WAIT <irq> REL`, false for regular `IRQ WAIT <irq>`
+	!>
+	!> See `pio_encode_delay`, `pio_encode_sideset`, `pio_encode_sideset_opt`
+	!> @param relative true for a `IRQ WAIT <irq> REL`, false for regular `IRQ WAIT <irq>`\
 	!> @param irq the irq number 0-7
+	!>
 	!> @return The instruction encoding with 0 delay and no side set value
-	!> See pio_encode_delay, pio_encode_sideset, pio_encode_sideset_opt
-	function pio_encode_irq_wait(relative, irq) result(r)
-		integer(c_int32_t) :: r
+	integer(c_int32_t) function pio_encode_irq_wait(relative, irq) result(r)
 		logical, intent(in), value :: relative
 		integer, intent(in), value :: irq
 		r = fpio_encode_irq_wait(logical(relative, c_bool), int(irq, c_int32_t))
@@ -513,12 +538,13 @@ contains
 
 	!> Encode a IRQ CLEAR instruction
 	!> This is the equivalent of `IRQ CLEAR <irq> <relative>`
-	!> @param relative true for a `IRQ CLEAR <irq> REL`, false for regular `IRQ CLEAR <irq>`
+	!>
+	!> See `pio_encode_delay`, `pio_encode_sideset`, `pio_encode_sideset_opt`
+	!> @param relative true for a `IRQ CLEAR <irq> REL`, false for regular `IRQ CLEAR <irq>`\
 	!> @param irq the irq number 0-7
+	!>
 	!> @return The instruction encoding with 0 delay and no side set value
-	!> See pio_encode_delay, pio_encode_sideset, pio_encode_sideset_opt
-	function pio_encode_irq_clear(relative, irq) result(r)
-		integer(c_int32_t) :: r
+	integer(c_int32_t) function pio_encode_irq_clear(relative, irq) result(r)
 		logical, intent(in), value :: relative
 		integer, intent(in), value :: irq
 		r = fpio_encode_irq_clear(logical(relative, c_bool), int(irq, c_int32_t))
@@ -526,20 +552,20 @@ contains
 
 	!> Encode a SET instruction
 	!> This is the equivalent of `SET <dest>, <value>`
-	!> @param dest The destination to apply the value to
+	!>
+	!> See `pio_encode_delay`, `pio_encode_sideset`, `pio_encode_sideset_opt`
+	!> @param dest The destination to apply the value to\
 	!> @param value The value 0-31
+	!>
 	!> @return The instruction encoding with 0 delay and no side set value
-	!> See pio_encode_delay, pio_encode_sideset, pio_encode_sideset_opt
-	function pio_encode_set(dest, value) result(r)
-		integer(c_int32_t) :: r
+	integer(c_int32_t) function pio_encode_set(dest, value) result(r)
 		integer, intent(in), value :: dest
 		integer, intent(in), value :: value
 		r = fpio_encode_set(int(dest, c_int32_t), int(value, c_int32_t))
 	end function
 
 	!> pio_encode_nop.
-	function pio_encode_nop() result(r)
-		integer(c_int32_t) :: r
+	integer(c_int32_t) function pio_encode_nop() result(r)
 		r = fpio_encode_nop()
 	end function
 
