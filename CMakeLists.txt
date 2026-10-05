@@ -11,16 +11,16 @@ pico_sdk_init()
 
 file(GLOB FORTRAN_SOURCES CONFIGURE_DEPENDS
 	src/*.f90
-    src/**/*.f90
+	src/**/*.f90
 )
 file(GLOB C_BINDS_SOURCES CONFIGURE_DEPENDS
-    c_bindings/*.c
-    c_bindings/**/*.c
+	c_bindings/*.c
+	c_bindings/**/*.c
 )
 
 add_executable(pengco_fort
 	${C_BINDS_SOURCES}
-    ${FORTRAN_SOURCES}
+	${FORTRAN_SOURCES}
 )
 
 target_link_libraries(pengco_fort
@@ -29,8 +29,8 @@ target_link_libraries(pengco_fort
 )
 
 target_compile_options(pengco_fort PRIVATE
-    $<$<COMPILE_LANGUAGE:Fortran>:
-        -fimplicit-none
+	$<$<COMPILE_LANGUAGE:Fortran>:
+		-fimplicit-none
 		-fmodule-private
 		-Werror=implicit-interface
 		-Werror=implicit-procedure
@@ -44,7 +44,7 @@ target_compile_options(pengco_fort PRIVATE
 
 		-nostartfiles
 		-specs=nosys.specs
-    >
+	>
 )
 
 pico_enable_stdio_usb(pengco_fort 1)
